@@ -1,0 +1,62 @@
+---
+### defaults for kvm role
+###
+
+# Permit root password authentication via ssh
+ssh_config_allow_root: true
+
+
+# Defines to add users to libvirt group (true) or not
+kvm_config_users: true
+
+# If =true users to add to libvirt group
+kvm_users:
+  - 'root'
+
+
+# Set an authentication scheme for UNIX read-write sockets.
+# This can be used to allow a 'trusted' set of user to access
+# to management capabilities without becoming root.
+kvm_set_unix_sock_group: true
+
+
+# Defines create your custom virtual network or not after KVM install
+kvm_create_network: true
+
+# and remove dafault network (created due of KVM install)
+kvm_delete_default_network: true
+kvm_bridge_name: br0
+
+# Define KVM Networks to create
+kvm_virtual_networks:
+    - name: 'Networkname'
+      mode: 'bridge'
+      bridge_name: "{{ kvm_bridge_name }}"
+      autostart: true
+      state: active
+    
+  # or:
+  #
+  # - name: 'ovs-network'
+  #   mode: 'bridge'
+  #   bridge_name: 'ovsbr0'
+  #   autostart: true
+  #   # active, inactive, present or absent
+  #   state: active
+  #   virtualport_type: 'openvswitch'
+  #   vlans:
+  #     - name: 'vlan-101'
+  #       trunk: false
+  #       vlan: 101
+  #     - name: 'vlan-102'
+  #       trunk: false
+  #       vlan: 102
+  #     - name: 'vlan-201'
+  #       trunk: false
+  #       vlan: 201
+  #     - name: 'vlan-all'
+  #       trunk: true
+  #       vlan:
+  #         - 101
+  #         - 102
+  #         - 201

@@ -1,0 +1,15 @@
+---
+### This is the example yml for Epel-repo role
+
+#   Specify hosts in inventory file and run:
+#   ansible-playbook install_epel_example.yml -i inventory
+#   or
+#   ansible-playbook install_epel_example.yml -i inventory --aks-pass
+#   if you don't want to set passwords in plain text
+
+- hosts: all
+  become: true
+  become_method: sudo
+  roles:
+    - role: epel-repo
+

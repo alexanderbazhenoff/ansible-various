@@ -1,0 +1,22 @@
+---
+### Common playbook: Configure server for KVM hypervisor
+###
+
+#   Specify hosts in inventory file and run:
+#   ansible-playbook init_new_kvm_hypervisor.yml -i inventory
+
+- hosts: new-hypervisors
+  become: true
+  become_method: sudo
+  roles:
+    - role: epel-repo
+      when: ansible_os_family == "RedHat"
+    - role: network
+      network_bridge_name: cloudbr0
+      network_gateway_address: 10.10.12.254
+      network_nameserver1: 10.10.12.47
+      network_nameserver2: 10.10.12.8
+      network_netmask_cidr: 255.255.255.0
+      bootproto: static
+    - role: kvm
+      kvm_config_users: true 

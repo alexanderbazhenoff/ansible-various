@@ -1,0 +1,6 @@
+---
+  - name: config_kvm | Changing UNIX socket acess controls (set group)
+    lineinfile: dest=/etc/libvirt/libvirtd.conf regexp="^{{ item.var }}=" insertafter="^#{{ item.var }}" line="{{ item.var }} = "{{ item.value }}""
+    with_items:
+      - { var: "unix_sock_group", value: "{{kvm_unix_sock_group}}"}
+    when: kvm_set_unix_sock_group

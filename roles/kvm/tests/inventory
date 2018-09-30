@@ -1,0 +1,19 @@
+[kvm-hosts]
+
+## specify hosts for kvm role
+## e.g.
+## 10.10.1.1
+## 10.10.1.2
+## hostname.domain
+server1.domain
+
+[kvm-hosts:vars]
+ansible_connection=ssh
+ansible_become_user=root
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+
+## Specify username, userpassword, rootpassword
+## of all virtual machines here
+ansible_ssh_user=<ansible_username>
+ansible_ssh_pass=<password>
+ansible_become_pass=<password>

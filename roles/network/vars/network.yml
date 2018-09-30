@@ -1,0 +1,16 @@
+---
+      network_ether_interfaces:
+       - device: "{{ ansible_default_ipv4.interface }}"
+         bootproto: manual
+      network_bridge_interfaces:
+       - device: "{{ network_bridge_name }}"
+         type: bridge
+         address: "{{ ansible_default_ipv4.address }}"
+         netmask: "{{ network_netmask_cidr }}"
+         gateway: "{{ network_gateway_address }}"
+         nameserver1: "{{ network_nameserver1 }}"
+         nameserver2: "{{ network_nameserver2 }}"
+         searchdomain: domain.com
+         bootproto: static
+         stp: "off"
+         ports: [eth0]

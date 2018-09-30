@@ -1,0 +1,35 @@
+---
+  - name: config_users | Getting libvirt group (libvirt)
+    shell: "getent group libvirt | cut -d: -f1"
+    register: "libvirt_group_found"
+    changed_when: false
+    check_mode: no
+
+  - name: config_users | Getting libvirt group (libvirtd)
+    shell: "getent group libvirtd | cut -d: -f1"
+    register: "libvirtd_group_found"
+    changed_when: false
+    check_mode: no
+
+  - name: config_users | Setting unix_sock_group (libvirt)
+    set_fact:
+      kvm_unix_sock_group: 'libvirt'
+    when: >
+          (libvirt_group_found is defined and
+            libvirt_group_found['stdout'] == 'libvirt')
+
+  - name: config_users | Setting unix_sock_group (libvirtd)
+    set_fact:
+      kvm_unix_sock_group: 'libvirtd'
+    when: >
+          (libvirtd_group_found is defined and
+            libvirtd_group_found['stdout'] == 'libvirtd')
+
+  - name: config_users | Adding users
+    user:
+      name: "{{ item }}"
+      groups: "{{ kvm_unix_sock_group }}"
+      append: yes
+      state: "present"
+    become: true
+    with_items: '{{ kvm_users }}'

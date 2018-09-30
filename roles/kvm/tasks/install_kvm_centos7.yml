@@ -1,0 +1,20 @@
+---
+  - name: install_kvm_centos7 | Install KVM related packages
+    yum: state=present update_cache=yes name={{ item }}
+    with_items:
+    - qemu-kvm
+    - qemu-img
+    - libvirt
+    - libvirt-python
+    - libvirt-client
+    - virt-install
+    - virt-viewer
+    register: yum_feedback
+
+  - name: install_kvm_centos7 | YUM results
+    debug:
+      msg: "{{ yum_feedback.results[-1].results }}"
+
+  - name: install_kvm_centos7 | Start libvirtd
+    service: name=libvirtd state=started enabled=yes
+    ignore_errors: yes

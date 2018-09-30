@@ -1,0 +1,20 @@
+---
+  - name: install_kvm_ubuntu | Install KVM related packages
+    apt:
+      name: "{{ item }}"
+      state: present
+    become: true
+    with_items:
+    - 'libvirt-bin'
+    - 'lldpd'
+    - 'python-libvirt'
+    - 'python-lxml'
+    - 'qemu-kvm'
+    - 'ubuntu-vm-builder'
+    register: aptresults
+
+  - name: install_vkm_ubuntu | APT results
+    debug:
+      msg: "{{ aptresults }}"
+
+    
