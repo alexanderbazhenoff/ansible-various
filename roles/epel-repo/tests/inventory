@@ -1,6 +1,6 @@
 [epel-hosts]
 
-## specify hosts for zabbix-agent role
+## specify hosts for epel repository role
 ## e.g.
 ## 10.10.1.1
 ## 10.10.1.2
